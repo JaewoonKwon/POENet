@@ -1,0 +1,53 @@
+{
+    "name": "AMBIDEXwrist_POENet",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "AmbidexWristModel",
+        "args": {
+            "nJoint": 4,
+            "useAdjoint": true
+        }
+    },
+    "data_loader": {
+        "type": "AmbidexWristDataLoader",
+        "args":{
+            "data_dir": "data/noisefree.txt",
+            "batch_size": 20,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "SE3Error",
+    "metrics": [
+        "getSE3PosRmseError", "getSE3OriRmseError"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 500,
+
+        "save_dir": "/home/robotics/HDD/POE_logger/",
+        "save_period": 50,
+        "verbosity": 1,
+        
+        "monitor": "min val_loss",
+        "early_stop": 15,
+
+        "tensorboard": true
+    }
+}

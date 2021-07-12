@@ -1,0 +1,57 @@
+{
+    "name": "Image_panda",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "ImageToPoseModel",
+        "args": {
+            "nJoint": 7,
+            "useAdjoint": true,
+            "backbone": "resnet18",
+            "pretrained": true
+        }
+    },
+    "data_loader": {
+        "type": "ImageToPoseDataLoader",
+        "args":{
+            "data_dir": "data/panda",
+            "batch_size": 50,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2,
+            "data_mean": [0.1377, 0.1984, 0.2584], 
+            "data_std": [0.1127, 0.1203, 0.1291]
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "SE3Error",
+    "metrics": [
+        "getSE3PosRmseError", "getSE3OriRmseError"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 5000,
+
+        "save_dir": "/home/robotics/HDD/POE_logger/",
+        "save_period": 2,
+        "verbosity": 1,
+        
+        "monitor": "min val_loss",
+        "early_stop": 30,
+
+        "tensorboard": true
+    }
+}
