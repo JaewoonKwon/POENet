@@ -6,7 +6,7 @@ For example, imagine that we have to estimate an end-effector (6-dim.) pose from
 It is quite obvious that end-to-end approaches (input: image, output: position/orientation)
 violate the underlying physical constraints (e.g., inconsistent distances between adjacent joints).
 
-In this project working with Seungyeon Kim and Younghun Kim, we are exploring a way to inject such physical prior into learning-based modeling.
+In this project working with Seungyeon Kim and Younghun Kim ([SNU](https://sites.google.com/robotics.snu.ac.kr/fcp/)), we are exploring a way to inject such physical prior into learning-based modeling.
 Specifically, our model estimates the underlying kinematic structure (i.e., joint twists) assuming a serial chain (or articulated rigid body), and
 consistently gives the output poses that always satisfy the kinematics (i.e., product-of-exponential (POE)).
 As preliminary results, we have identified the tendon-driven AMBIDEX wrist that has four joints actuated by two motors,
@@ -31,4 +31,4 @@ Training:
 $ python train.py --config config.json
 $ python train.py --config config_image.json
 ```
-These estimate the end-effector poses from the motor angles and the robot images, respectively.
+These examples estimate the end-effector poses from the motor angles and the robot images, respectively.
